@@ -1,0 +1,6 @@
+/var/log/mailman-web/*.log {
+    missingok
+    notifempty
+    delaycompress
+    su root apache
+}

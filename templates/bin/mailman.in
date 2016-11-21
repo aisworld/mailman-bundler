@@ -1,0 +1,5 @@
+#!/bin/bash
+
+exec ${mailman:venv-dir}/bin/mailman \
+    -C "${buildout:directory}/deployment/mailman.cfg" \
+    $@

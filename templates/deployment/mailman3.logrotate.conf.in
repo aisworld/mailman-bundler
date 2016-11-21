@@ -1,0 +1,8 @@
+${buildout:directory}/var/logs/*.log {
+    missingok
+    sharedscripts
+    su mailman mailman
+    postrotate
+        /bin/kill -HUP `cat ${buildout:directory}/var/master.pid 2>/dev/null` 2>/dev/null || true
+    endscript
+}

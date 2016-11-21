@@ -1,0 +1,7 @@
+bind = ['0.0.0.0:8000']
+proc_name = "mailman-web"
+chdir = "${buildout:directory}"
+pidfile = "${buildout:directory}/var/gunicorn.pid-"
+accesslog = "${buildout:directory}/var/mailman-web/access.log"
+errorlog = "${buildout:directory}/var/mailman-web/error.log"
+#daemon = True

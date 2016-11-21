@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+BINDIR="${buildout:bin-directory}"
+CONFDIR="${buildout:directory}/${mailman-web:project}"
+SETTINGS="${mailman-web:settings}"
+DJANGO_CONTROL_SCRIPT="$BINDIR/${mailman-web:control-script}"
+STATIC_DIR=`"$BINDIR/django-read-settings" STATIC_ROOT`
+DEBUG=`"$BINDIR/django-read-settings" DEBUG`
+
+set -x
+
+if [ "$DEBUG" == "False" ]; then
+    mkdir -p "$STATIC_DIR" || :
+    "$DJANGO_CONTROL_SCRIPT" collectstatic --clear --noinput --verbosity 0
+    "$DJANGO_CONTROL_SCRIPT" compress
+fi
+
+dbdir=$(dirname $($BINDIR/django-read-settings DATABASES.default.NAME))
+mkdir -p $dbdir
+syncdb_cmd="$DJANGO_CONTROL_SCRIPT migrate"
+if [[ ! -t 1 ]]; then
+    # stdout is not a terminal
+    syncdb_cmd="$syncdb_cmd --noinput"
+fi
+$syncdb_cmd
+"$DJANGO_CONTROL_SCRIPT" update_index
+[ ! -f /usr/sbin/postmap ] || "$BINDIR/mailman" aliases

@@ -1,0 +1,7 @@
+include bootstrap.py
+include buildout.cfg
+include *.rst
+include mailman_web/*.py
+recursive-include mailman_bundler *.in
+recursive-include deployment *.in
+include deployment/mailman-web.logrotate.conf

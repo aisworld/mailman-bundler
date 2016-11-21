@@ -1,0 +1,7 @@
+@hourly  ${buildout:bin-directory}/${mailman-web:control-script} runjobs hourly
+@daily   ${buildout:bin-directory}/${mailman-web:control-script} runjobs daily
+@weekly  ${buildout:bin-directory}/${mailman-web:control-script} runjobs weekly
+@monthly ${buildout:bin-directory}/${mailman-web:control-script} runjobs monthly
+@yearly  ${buildout:bin-directory}/${mailman-web:control-script} runjobs yearly
+0,15,30,45 * * * * ${buildout:bin-directory}/${mailman-web:control-script} runjobs quarter_hourly
+* * * * * ${buildout:bin-directory}/${mailman-web:control-script} runjobs minutely
